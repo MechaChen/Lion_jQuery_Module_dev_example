@@ -1,50 +1,62 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width">
-<title>JS Bin</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>JS Bin</title>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-</head>
-<body>
-<script type="text/javascript">
-(function($) {
-'use strict';
-    var ModuleName = 'lbx_lnop';
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      (function($) {
+        "use strict";
+        var ModuleName = "lbx_lnop";
 
-    var Module = function ( ele, options ) {
-        this.ele = ele;
-        this.$ele = $(ele);
-        this.option = options;
-    };
+        var Module = function(ele, options) {
+          this.ele = ele;
+          this.$ele = $(ele);
+          this.option = options;
+        };
 
-    Module.prototype.func = function () {
-        console.log('this is a prototype function!!!');
-    };
+        // 給 Module 的預設函數
 
-    Module.prototype.method = function () {
-        console.log('this is a prototype function!!!');
-    };
+        Module.prototype.func = function() {
+          console.log("this is a prototype function!!!");
+        };
 
-    $.fn[ModuleName] = function ( methods, options ) {
-        return this.each(function() {
-            var opts = $.extend( {}, ( typeof methods === 'object' && options ), ( typeof options === 'object' && options ) );
+        Module.prototype.method = function() {
+          console.log("this is a prototype function!!!");
+        };
+
+        $.fn[ModuleName] = function(methods, options) {
+          return this.each(function() {
+            var opts = $.extend(
+              // $.extend 合併物件
+              {},
+              //   可能有一 DEFAULTE 值
+              typeof methods === "object" && options, // 如果 methods 為物件，輸出 options
+              typeof options === "object" && options // 如果 options 為物件，輸出 options
+            );
+            console.log(opts);
             var module = new Module(this, opts);
             // Do something to each element here.
-        });
-    };
+            console.log(module.ele);
+            console.log(module.$ele);
+            console.log(module.option);
+            module.func();
+            module.method();
+          });
+        };
+      })(jQuery);
+    </script>
+    <a href="">123</a>
+    <a href="">456</a>
 
-})(jQuery);
-</script>
-<a href="">123</a>
-<a href="">456</a>
-
-<script type="text/javascript">
-$(function() {
-	$( "a" ).lbx_lnop();
-});
-</script>
-</body>
-
+    <script type="text/javascript">
+      $(function() {
+        $("a").lbx_lnop();
+      });
+    </script>
+  </body>
 </html>
